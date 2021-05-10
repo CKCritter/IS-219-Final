@@ -15,16 +15,9 @@ const server = express();
 server.use(cors());
 server.use(auth(config));
 
-//const mainRoutes = require('./routes/main.routes');
+const mainRoutes = require('./routes/main.routes');
+server.use('/api/secrets', mainRoutes);
 
-server.get('/profile', requiresAuth(), (req, res) => {
-    res.send(JSON.stringify(req.oidc.user));
-});
-
-//server.use('/api/v1/hw_100', hwRoutes);
-//server.use('', mainRoutes);
-
-server.set('view engine', 'hbs');
 server.set('port', process.env.PORT || 9080);
 server.set('ip', process.env.NODEJS_IP || '127.0.0.1');
 

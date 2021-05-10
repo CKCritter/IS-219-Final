@@ -6,7 +6,7 @@ function LogoutButton() {
     return (
         <div>
             <button onClick={() => logout()}>
-                Login
+                Logout
             </button>
         </div>
     )
