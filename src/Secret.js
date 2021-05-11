@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
+import Grades from './Grades.js'
 
 function Secret() {
     const [message, setMessage] = useState("");
+    const [grades, setGrades] = useState([]);
     const serverUrl = process.env.REACT_APP_SERVER_URL;
 
     const { getAccessTokenSilently } = useAuth0();
@@ -23,7 +25,7 @@ function Secret() {
             );
 
             const responseData = await response.json();
-
+            setGrades([{"id": 1, "Student": "Charles", "Grade": "A"}])
             setMessage(responseData.message);
         } catch (error) {
             setMessage(error.message);
@@ -34,6 +36,7 @@ function Secret() {
         <div>
             <button onClick={() => callSecret()}>Secret</button>
             {message}
+            <Grades grades={grades}/>
         </div>
     )
 }
