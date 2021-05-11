@@ -1,30 +1,16 @@
 const express = require("express");
-const jwt = require("express-jwt");
-const jwks = require('jwks-rsa');
 const router = express.Router();
 const mainController = require("../controllers/mainController.js")
 
-const requiresAuth = jwt({
-    secret: jwks.expressJwtSecret({
-        cache: true,
-        rateLimit: true,
-        jwksRequestsPerMinute: 5,
-        jwksUri: 'https://dev-qg8-t8rt.us.auth0.com/.well-known/jwks.json'
-    }),
-    audience: 'http://localhost:9080/',
-    issuer: 'https://dev-qg8-t8rt.us.auth0.com/',
-    algorithms: ['RS256']
-});
-
 //Create
-router.post('/', requiresAuth, mainController.post);
+router.post('/', mainController.post);
 //Read
-router.get('/', requiresAuth, mainController.getAll);
+router.get('/', mainController.getAll);
 //Read
-router.get('/:id', requiresAuth, mainController.getById);
+router.get('/:id', mainController.getById);
 //Update
-router.put('/:id', requiresAuth, mainController.put);
+router.put('/:id', mainController.put);
 //Delete
-router.delete('/:id', requiresAuth, mainController.delete);
+router.delete('/:id', mainController.delete);
 
 module.exports = router;

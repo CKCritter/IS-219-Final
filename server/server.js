@@ -1,19 +1,27 @@
 const express = require('express');
 const cors = require('cors');
-const { auth, requiresAuth } = require('express-openid-connect');
-
-const config = {
-    authRequired: false,
-    auth0Logout: true,
-    secret: 'a long, randomly-generated string stored in env',
-    baseURL: 'http://localhost:9080',
-    clientID: 'AX4LKct4qaEQ1VBnDBoynhUeEqZTIsNq',
-    issuerBaseURL: 'https://dev-qg8-t8rt.us.auth0.com',
-};
-
+const jwt = require("express-jwt");
+const jwks = require('jwks-rsa');
+const bodyParser = require('body-parser');
 const server = express();
+
 server.use(cors());
-server.use(auth(config));
+server.use(bodyParser.urlencoded({ extended: true }))
+server.use(bodyParser.json())
+
+const jwtCheck = jwt({
+    secret: jwks.expressJwtSecret({
+        cache: true,
+        rateLimit: true,
+        jwksRequestsPerMinute: 5,
+        jwksUri: 'https://dev-qg8-t8rt.us.auth0.com/.well-known/jwks.json'
+    }),
+    audience: 'http://localhost:9080/',
+    issuer: 'https://dev-qg8-t8rt.us.auth0.com/',
+    algorithms: ['RS256']
+});
+
+server.use(jwtCheck);
 
 const mainRoutes = require('./routes/main.routes');
 server.use('/api/secrets', mainRoutes);
