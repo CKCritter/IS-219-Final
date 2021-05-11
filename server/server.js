@@ -3,11 +3,11 @@ const cors = require('cors');
 const jwt = require("express-jwt");
 const jwks = require('jwks-rsa');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 const server = express();
 
 server.use(cors());
-server.use(bodyParser.urlencoded({ extended: true }))
-server.use(bodyParser.json())
 
 const jwtCheck = jwt({
     secret: jwks.expressJwtSecret({
@@ -22,6 +22,9 @@ const jwtCheck = jwt({
 });
 
 server.use(jwtCheck);
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(bodyParser.json());
+server.use(cookieParser());
 
 const mainRoutes = require('./routes/main.routes');
 server.use('/api/secrets', mainRoutes);

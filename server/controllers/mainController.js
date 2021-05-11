@@ -35,13 +35,14 @@ exports.getById = (req, res) => {
 
 exports.put = (req, res) => {
     console.log(req.body);
-    conn.query('UPDATE grades SET `Student` = ?, `Grade`=? WHERE id = ?', [req.body.student, req.body.grade, req.params.id], (err, rows) => {
+    conn.query('UPDATE grades SET `Student` = ?, `Grade`=? WHERE id = ?', [req.body.Student, req.body.Grade, req.params.id], (err, rows) => {
         if (err) throw err;
         res.json({ data: rows });
     });
 }
 
 exports.delete = (req, res) => {
+    console.log(req.body)
     conn.query('DELETE FROM grades WHERE id = ?', [req.params.id], (err, rows) => {
         if (err) throw err;
         res.json({ data: rows });

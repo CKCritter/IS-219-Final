@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import Grades from './Grades.js'
 import Update from './Update.js'
+import jsonStringify from 'json-stringify'
 
 function Secret() {
     const [message, setMessage] = useState("");
@@ -20,11 +21,14 @@ function Secret() {
             let url = `${serverUrl}/api/secrets/`
             if(params.hasOwnProperty('body') && params.body.hasOwnProperty('id')){
                 url = `${serverUrl}/api/secrets/${params.body.id}`
+                params.body = jsonStringify(params.body);
             }
 
 
-
-            params.headers = { Authorization: `Bearer ${token}` }
+            params.headers = { Authorization: `Bearer ${token}`,
+                                'Content-Type' : 'application/json',}
+            console.log(params);
+            console.log(params.body);
             const response = await fetch(
                 url, params
             );
