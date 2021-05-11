@@ -14,7 +14,7 @@ function Secret() {
             });
             console.log(token)
             const response = await fetch(
-                `${serverUrl}/api/secrets`,
+                `${serverUrl}/api/secrets/`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -33,7 +33,6 @@ function Secret() {
     return (
         <div>
             <button onClick={() => callSecret()}>Secret</button>
-            <button onClick={() => callOpen()}>Public</button>
             {message}
         </div>
     )

@@ -18,6 +18,7 @@ exports.post = (req, res) => {
 }
 
 exports.getAll = (req, res) => {
+    console.log("Get all")
     conn.query('SELECT * FROM grades', (err, rows) => {
         if (err) throw err;
         res.json({ data: rows });
@@ -25,6 +26,7 @@ exports.getAll = (req, res) => {
 }
 
 exports.getById = (req, res) => {
+    console.log(req.body)
     conn.query('SELECT * FROM grades WHERE id = ?', [req.params.id], (err, rows) => {
         if (err) throw err;
         res.json({ data: rows });
