@@ -25,7 +25,7 @@ function Secret() {
             );
 
             const responseData = await response.json();
-            setGrades([{"id": 1, "Student": "Charles", "Grade": "A"}])
+            setGrades(responseData.data);
             setMessage(responseData.message);
         } catch (error) {
             setMessage(error.message);
